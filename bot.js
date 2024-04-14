@@ -16,7 +16,7 @@ const phrase = extractPhrase.join(" ")
 export const Bot = {
     async start(req, res) {
         const browser = await puppeteer.launch({
-            headless: false,
+            headless: true,
             executablePath: process.env.NODE_ENV === 'production'
                 ? process.env.PUPPETEER_EXECUTABLE_PATH
                 : puppeteer.executablePath(),

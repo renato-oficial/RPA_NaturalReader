@@ -1,6 +1,6 @@
 import puppeteer from "puppeteer-extra";
-import fs from "node:fs/promises"
-import path from "path"
+import dotenv from "dotenv"
+dotenv.config()
 
 import { executablePath } from "puppeteer";
 import StealthPlugin from "puppeteer-extra-plugin-stealth"
@@ -17,11 +17,15 @@ export const Bot = {
     async start(req, res) {
         const browser = await puppeteer.launch({
             headless: false,
+            executablePath: process.env.NODE_ENV === 'production'
+                ? process.env.PUPPETEER_EXECUTABLE_PATH
+                : puppeteer.executablePath(),
             args: [
                 '--no-sandbox',
                 '--disable-dev-shm-usage',
                 '--disable-setuid-sandbox',
-                '--no-sandbox',
+                '--no-zygote',
+                '--single-process',
                 '--disable-web-security',
                 '--disable-features=IsolateOrigins',
                 '--disable-site-isolation-trials',
